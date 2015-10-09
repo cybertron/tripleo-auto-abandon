@@ -24,6 +24,7 @@ pip-log.txt
 
 # Unit test / coverage reports
 .coverage
+cover
 .tox
 nosetests.xml
 .testrepository
@@ -52,3 +53,5 @@ ChangeLog
 *~
 .*.swp
 .*sw?
+
+auto-abandon.conf

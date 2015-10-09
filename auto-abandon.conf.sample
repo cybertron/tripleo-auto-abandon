@@ -1,0 +1,23 @@
+[DEFAULT]
+
+#
+# From tripleo-auto-abandon
+#
+
+# Username for connecting to Gerrit. (string value)
+#gerrit_user = <None>
+
+# Path to file containing the SSH key for connecting to Gerrit.
+# (string value)
+#ssh_key_file = <None>
+
+# HTTP Password for gerrit_user. (string value)
+#http_password = <None>
+
+# Reviewstats project file listing the projects that the tool should
+# be run against. (string value)
+#project_file = <None>
+
+# When set to True, no changes will actually be abandoned. (boolean
+# value)
+#dryrun = true

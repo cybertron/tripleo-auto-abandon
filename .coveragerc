@@ -1,7 +1,7 @@
 [run]
 branch = True
 source = tripleo_auto_abandon
-omit = tripleo_auto_abandon/openstack/*
+omit = tripleo_auto_abandon/tests/*
 
 [report]
 ignore_errors = True
