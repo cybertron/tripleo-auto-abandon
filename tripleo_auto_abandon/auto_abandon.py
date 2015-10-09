@@ -24,9 +24,6 @@ from reviewstats import utils
 
 from tripleo_auto_abandon import _opts
 
-# When set to True, no changes will actually be abandoned.
-dryrun = True
-
 WARN_MSG = ('TripleO Review Cleanup Bot\n\n'
             'This change has had unaddressed negative feedback for a '
             'significant period of time. If the feedback is not dealt with '
@@ -39,7 +36,8 @@ AB_MSG = ('TripleO Review Cleanup Bot\n\n'
           'This change has had unaddressed negative feedback for more than '
           'one month. It is being automatically abandoned by this cleanup '
           'job. Please feel free to restore the change if you wish to '
-          'continue working on it.'
+          'continue working on it.\n\n'
+          'For more details, see [insert URL here]'
           )
 ABANDON_DAYS = 31
 
