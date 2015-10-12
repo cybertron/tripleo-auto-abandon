@@ -99,6 +99,7 @@ FAKE_CHANGE = {
     'id': 'fake-id',
     'url': 'https://fake-url',
     'lastUpdated': 10,
+    'commitMessage': 'Fake commit message',
 }
 BASE_TS = 100
 ONE_DAY = 60 * 60 * 24

@@ -170,7 +170,9 @@ def process_changes(changes):
 
 
         if days > ABANDON_DAYS:
-            purty_print("Abandoning %s" % change['url'])
+            purty_print('Abandoning %s - %s' %
+                        (change['url'],
+                         change['commitMessage'].split('\n')[0]))
             abandon(change['id'])
         # NOTE(bnemec): This probably complicates things too much.  We'd have
         # to check that we haven't already commented on the patch set, and
