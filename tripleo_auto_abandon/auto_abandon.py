@@ -49,6 +49,17 @@ def load_config():
     CONF(['--config-file', 'auto-abandon.conf'])
 
 
+def _dry_run_msg(url, data):
+    return ("DRY RUN: POST %s DATA: %s" %(url, data))
+
+
+def purty_print(msg):
+    if type(msg) is not str:
+        msg = msg.text
+    time_stamp = datetime.datetime.now().isoformat()
+    print "%s: %s " %(time_stamp, msg)
+
+
 def get_changes():
     #with open('changes.json') as f:
     #    return json.loads(f.read())
@@ -63,11 +74,12 @@ def warn(change_id, revision_id):
            (change_id, revision_id))
     data = {'message': WARN_MSG}
     if CONF.dryrun:
-        return
-    response = requests.post(url, json=data,
-                             auth=auth.HTTPDigestAuth(CONF.gerrit_user,
-                                                      CONF.http_password))
-    # print response.text
+        response = _dry_run_msg(url, data)
+    else:
+        response = requests.post(url, json=data,
+                                 auth=auth.HTTPDigestAuth(CONF.gerrit_user,
+                                                          CONF.http_password))
+    purty_print(response)
 
 
 def abandon(change_id):
@@ -75,11 +87,12 @@ def abandon(change_id):
            change_id)
     data = {'message': AB_MSG}
     if CONF.dryrun:
-        return
-    response = requests.post(url, json=data,
-                             auth=auth.HTTPDigestAuth(CONF.gerrit_user,
-                                                      CONF.http_password))
-    # print response.text
+        response = _dry_run_msg(url, data)
+    else:
+        response = requests.post(url, json=data,
+                                 auth=auth.HTTPDigestAuth(CONF.gerrit_user,
+                                                          CONF.http_password))
+    purty_print(response)
 
 
 def days_since_negative_feedback(approvals, now_ts):
@@ -157,7 +170,7 @@ def process_changes(changes):
 
 
         if days > ABANDON_DAYS:
-            print 'Abandoning %s' % change['url']
+            purty_print("Abandoning %s" % change['url'])
             abandon(change['id'])
         # NOTE(bnemec): This probably complicates things too much.  We'd have
         # to check that we haven't already commented on the patch set, and
