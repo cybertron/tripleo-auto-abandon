@@ -39,7 +39,7 @@ class TestAutoAbandon(base.TestCase):
         self.useFixture(conf)
         conf.config(gerrit_user=USER, ssh_key_file=KEY_FILE,
                     http_password=HTTP_PASSWORD,
-                    project_file=PROJECT_FILE)
+                    project_file=PROJECT_FILE, dryrun=False)
 
     @mock.patch('reviewstats.utils.get_projects_info')
     @mock.patch('reviewstats.utils.get_changes')
