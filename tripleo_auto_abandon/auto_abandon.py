@@ -54,8 +54,10 @@ def _dry_run_msg(url, data):
 
 
 def purty_print(msg):
-    if type(msg) is not str:
+    try:
         msg = msg.text
+    except Exception:
+        pass
     time_stamp = datetime.datetime.now().isoformat()
     print "%s: %s " %(time_stamp, msg)
 
