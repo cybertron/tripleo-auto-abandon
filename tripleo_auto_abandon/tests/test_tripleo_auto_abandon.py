@@ -35,11 +35,11 @@ PROJECT_FILE='/top/secret.json'
 class TestAutoAbandon(base.TestCase):
     def setUp(self):
         super(TestAutoAbandon, self).setUp()
-        conf = config_fixture.Config()
-        self.useFixture(conf)
-        conf.config(gerrit_user=USER, ssh_key_file=KEY_FILE,
-                    http_password=HTTP_PASSWORD,
-                    project_file=PROJECT_FILE, dryrun=False)
+        self.conf = config_fixture.Config()
+        self.useFixture(self.conf)
+        self.conf.config(gerrit_user=USER, ssh_key_file=KEY_FILE,
+                         http_password=HTTP_PASSWORD,
+                         project_file=PROJECT_FILE, dryrun=False)
 
     @mock.patch('reviewstats.utils.get_projects_info')
     @mock.patch('reviewstats.utils.get_changes')
@@ -78,6 +78,16 @@ class TestAutoAbandon(base.TestCase):
             json=data,
             auth=mock_auth_obj
             )
+
+    @mock.patch('requests.auth.HTTPDigestAuth')
+    @mock.patch('requests.post')
+    def test_abandon_dryrun(self, mock_post, mock_auth):
+        self.conf.config(dryrun=True)
+        mock_auth_obj = mock.Mock()
+        mock_auth.return_value = mock_auth_obj
+        auto_abandon.abandon('123')
+        self.assertFalse(mock_post.called)
+        self.assertFalse(mock_auth.called)
 
     @mock.patch('tripleo_auto_abandon.auto_abandon.process_changes')
     @mock.patch('tripleo_auto_abandon.auto_abandon.get_changes')
